@@ -1,6 +1,5 @@
 ![alt text](Prometheus.drawio.png)
 
-![alt text](Prometheus.drawio.svg)
 
 # Prometheus
 
