@@ -1,0 +1,9 @@
+ 
+wget https://github.com/prometheus/alertmanager/releases/download/v0.28.0/alertmanager-0.28.0.linux-amd64.tar.gz
+tar -xf alertmanager-0.28.0.linux-amd64.tar.gz
+mv alertmanager-0.28.0.linux-amd64 alertmanager
+cd alertmanager
+vim /etc/systemd/system/alertmanager.service
+systemctl start alertmanager
+systemctl enable alertmanager
+netstat -lntp

@@ -1,0 +1,63 @@
+cd /opt
+
+wget https://github.com/prometheus/prometheus/releases/download/v3.0.1/prometheus-3.0.1.linux-amd64.tar.gz
+
+tar -xf prometheus-3.0.1.linux-amd64.tar.gz
+
+mv prometheus-3.0.1.linux-amd64 prometheus
+
+cd node_exporter
+
+vim /etc/systemd/system/prometheus.service
+
+
+systemctl start prometheus
+
+systemctl enable prometheus
+
+systemctl status prometheus
+
+
+
+#Creating prometheus with ansible code:
+- name: prometheus configuration
+  hosts: prometheus
+  become: yes
+  tasks:
+  - name: ansible to install PyMySQL	#to connect mysql DB, need PyMySQL dependency
+    ansible.builtin.pip:
+      name: 
+      - PyMySQL
+      - cryptography    
+      - boto3
+      - botocore
+      executable: pip3.9
+  - name: Download node prometheus code
+    ansible.builtin.get_url:
+      url: https://github.com/prometheus/prometheus/releases/download/v3.0.1/prometheus-3.0.1.linux-amd64.tar.gz
+      dest: /opt/prometheus-3.0.1.linux-amd64.tar.gz
+    
+  - name: Extract node prometheus code
+    ansible.builtin.unarchive:
+      src: /opt/prometheus-3.0.1.linux-amd64.tar.gz
+      dest:  /opt/prometheus
+      remote_src: yes
+
+  # - name: Move the src file to dest
+  #   ansible.builtin.command: mv node_exporter-1.8.2.linux-amd64 node_exporter
+
+  - name: Copy prometheus service file
+    ansible.builtin.copy:
+     src: node_exporter.service
+     dest: /etc/systemd/system/prometheus.service
+
+  - name: Restart prometheus
+    ansible.builtin.service:
+      name: prometheus
+      state: started
+      enabled: yes
+
+
+
+
+

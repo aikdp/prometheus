@@ -1,0 +1,63 @@
+# cd /opt
+
+# wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
+
+# tar -xf node_exporter-1.8.2.linux-amd64.tar.gz
+
+# mv node_exporter-1.8.2.linux-amd64 node_exporter
+
+# cd node_exporter
+
+# vim /etc/systemd/system/node_exporter.service
+
+
+# systemctl start node_exporter
+
+# systemctl enable node_exporter
+
+# systemctl status node_exporter
+
+
+
+#Creating Node Exporter with ansible code:
+- name: Node_exporter configuration
+  hosts: node-1
+  become: yes
+  tasks:
+  - name: ansible to install PyMySQL	#to connect mysql DB, need PyMySQL dependency
+    ansible.builtin.pip:
+      name: 
+      - PyMySQL
+      - cryptography    
+      - boto3
+      - botocore
+      executable: pip3.9
+  - name: Download node exporter code
+    ansible.builtin.get_url:
+      url: https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
+      dest: /opt/node_exporter-1.8.2.linux-amd64.tar.gz
+    
+  - name: Extract node exporter code
+    ansible.builtin.unarchive:
+      src: /opt/node_exporter-1.8.2.linux-amd64.tar.gz
+      dest:  /opt/node_exporter
+      remote_src: yes
+
+  # - name: Move the src file to dest
+  #   ansible.builtin.command: mv node_exporter-1.8.2.linux-amd64 node_exporter
+
+  - name: Copy expense conf content
+    ansible.builtin.copy:
+     src: node_exporter.service
+     dest: /etc/systemd/system/node_exporter.service
+
+  - name: Restart node exporter
+    ansible.builtin.service:
+      name: node_exporter
+      state: started
+      enabled: yes
+
+
+
+
+

@@ -1,0 +1,8 @@
+[Unit]
+Description=Alertmanager Server
+
+[Service]
+ExecStart=/opt/alertmanager/alertmanager --config.file=/opt/alertmanager/alertmanager.yml
+
+[Install]
+WantedBy=multi-user.target

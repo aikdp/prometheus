@@ -1,0 +1,19 @@
+[Unit]
+Description=Prometheus Server
+
+[Service]
+ExecStart=/opt/prometheus/prometheus --config.file=/opt/prometheus/prometheus.yml
+
+[Install]
+WantedBy=multi-user.target
+
+alertmanager
+
+[Unit]
+Description=AlertManager Server
+
+[Service]
+ExecStart=/opt/alertmanager/alertmanager --config.file=/opt/alertmanager/alertmanager.yml
+
+[Install]
+WantedBy=multi-user.target
