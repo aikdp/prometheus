@@ -1,6 +1,4 @@
-![alt text](Prometheus.drawio.png)
-
-
+![alt text](Prometheus.drawio.svg)
 # Prometheus
 
 ## Reference: https://prometheus.io/download/
