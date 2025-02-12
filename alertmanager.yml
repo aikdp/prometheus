@@ -7,9 +7,9 @@ route:
 receivers:
   - name: 'ses'
     email_configs:
-      - smarthost: 'email-smtp.us-east-1.amazonaws.com:587' #SMTP endpoint url
-        auth_username: 'AKIAX2DZEGWKVJ4PTYZO' #SMTP USER NAme
-        auth_password: "BAMWroqn/CpfDX+5up2Gs/WzADTECvrJLC5F8kcJbfvl" #Password
+      - smarthost: '*****:587' #SMTP endpoint url
+        auth_username: 'your username' #SMTP USER NAme
+        auth_password: "your password" #Password
         from: 'kdprasad028@gmail.com'
         to: 'drg.durgaprasad028@gmail.com'
         headers:
